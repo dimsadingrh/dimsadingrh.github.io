@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dimas Adi Nugroho</title>
+  <title>Halo!</title>
   <style>
     body {
       margin: 0;
-      background-color: #000;
+      background-color: #444040;
       color: #fff;
       font-family: Helvetica, Arial, sans-serif;
       height: 100vh;
@@ -25,35 +25,37 @@
     }
 
     p {
-      font-weight: 300;
+      font-weight: medium;
       font-size: 1.2em;
       max-width: 80%;
       margin-bottom: 2em;
     }
 
-    .linkedin-btn {
+    .button-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .button {
       display: flex;
       align-items: center;
       padding: 10px 20px;
-      background-color: #0077b5; /* Blue LinkedIn */
-      color: #fff;
+      border-radius: 30px;
       font-family: Helvetica, Arial, sans-serif;
       font-weight: 500;
       font-size: 1em;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
       text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    .linkedin-btn img {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
+    .linkedin-btn {
+      background-color: #0077b5;
+      color: #fff;
     }
 
     .linkedin-btn:hover {
-      background-color: #005f85; /* Darker blue for hover effect */
+      background-color: #005f85;
     }
 
     .portfolio-btn {
@@ -75,13 +77,18 @@
 <body>
   <h1>Dimas Adi Nugroho</h1>
   <p>Manusia Observasi</p>
-  <!-- Tombol -->
-  <a href="https://www.linkedin.com/in/dimasadingrh" target="_blank" class="linkedin-btn">
-    LinkedIn
-  </a>
 
-  <a href="https://dimasadingrh.wixsite.com/portfolio" target="_blank" class="button portfolio-btn">
-    Portofolio
-  </a>
+  <div class="button-group">
+    <!-- LinkedIn Button -->
+    <a href="https://www.linkedin.com/in/dimasadingrh" target="_blank" class="button linkedin-btn">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/LinkedIn_Logo_2013.png" alt="LinkedIn Logo">
+      LinkedIn
+    </a>
+
+    <!-- Portfolio Button -->
+    <a href="https://dimasadingrh.wixsite.com/portfolio" target="_blank" class="button portfolio-btn">
+      Portofolio
+    </a>
+  </div>
 </body>
 </html>
