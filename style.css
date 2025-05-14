@@ -308,42 +308,21 @@ main {
   }
 }
 
-/* Efek vignette hanya untuk halaman kontak */
-body.kontak-bg::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(
-    to right,
-    rgba(0,0,0,0.35) 0%,
-    rgba(0,0,0,0.00) 20%,
-    rgba(0,0,0,0.00) 80%,
-    rgba(0,0,0,0.35) 100%
-  ),
-  linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.25) 0%,
-    rgba(0,0,0,0.00) 40%
-  );
+body.kontak-bg {
+  min-height: 100vh;
+  background: url('/images/kontak-bg.jxl') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #181a20; /* fallback jika gambar gagal dimuat */
 }
-
-/* ...existing code... */
 
 .kontak-flex {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 48px;
-  background: rgba(24, 26, 32, 0.85);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
-  padding: 60px 40px 40px 40px;
-  margin: 60px auto 0 auto;
-  max-width: 900px;
+  gap: 90px;
+  padding: 100px 0px 0px 0px;
+  margin: 100px auto 0 auto;
+  max-width: 1100px;
   color: #fff;
 }
 
