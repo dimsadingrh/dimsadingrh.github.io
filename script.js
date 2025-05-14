@@ -1,12 +1,49 @@
 document.addEventListener("DOMContentLoaded", function () {
   const toggleBtn = document.getElementById('menuToggle');
   const overlayMenu = document.getElementById('overlayMenu');
+  const overlayMenuList = overlayMenu.querySelector('ul');
+
+  function closeOverlayMenuWithAnimation() {
+    // Tambahkan class closing untuk animasi keluar
+    overlayMenu.classList.add('closing');
+    // Jangan langsung hapus .active pada toggleBtn, tunggu animasi selesai
+    setTimeout(() => {
+      overlayMenu.classList.remove('active', 'closing');
+      toggleBtn.classList.remove('active');
+    }, 1000); // waktu harus sama dengan animasi CSS
+  }
 
   toggleBtn.addEventListener('click', () => {
-    overlayMenu.classList.toggle('active');
-    toggleBtn.classList.toggle('active'); // Toggle class active pada tombol
+    if (overlayMenu.classList.contains('active')) {
+      closeOverlayMenuWithAnimation();
+    } else {
+      overlayMenu.classList.add('active');
+      toggleBtn.classList.add('active');
+    }
+  });
+
+  // Tutup overlay jika klik di luar menu list
+  document.addEventListener('mousedown', function (e) {
+    if (
+      overlayMenu.classList.contains('active') &&
+      !overlayMenuList.contains(e.target) &&
+      !toggleBtn.contains(e.target)
+    ) {
+      closeOverlayMenuWithAnimation();
+    }
   });
 });
+
+  // Tutup overlay jika klik di luar menu list
+  document.addEventListener('mousedown', function (e) {
+    if (
+      overlayMenu.classList.contains('active') &&
+      !overlayMenuList.contains(e.target) &&
+      !toggleBtn.contains(e.target)
+    ) {
+      closeOverlayMenuWithAnimation();
+    }
+  });
 
 let lastScrollY = window.scrollY;
 
