@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Halo!</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/png" href="logo.png" />
+</head>
+<body>
+  <div class="background-blur"></div>
+  <h1>Dimas Adi Nugroho</h1>
+  <p>Manusia Observasi</p>
+
+  <div class="button-group">
+    <!-- LinkedIn Button -->
+    <a href="https://www.linkedin.com/in/dimasadingrh" target="_blank" class="button linkedin-btn">
+      LinkedIn
+    </a>
+
+    <!-- Portfolio Button -->
+    <a href="https://dimasadingrh.wixsite.com/portfolio" target="_blank" class="button portfolio-btn">
+      Portofolio
+    </a>
+
+    <a href="https://www.instagram.com/dimsadingrh" target="_blank" class="button instagram-btn">
+      Instagram
+    </a>
+
+    <a href="https://x.com/dimsadingrh/" target="_blank" class="button twitter-btn">
+      Twitter
+    </a>
+  </div>
+</body>
+</html>

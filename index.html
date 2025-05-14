@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Halo!</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="logo.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dimas | Portofolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="images/logo.svg" />
 </head>
 <body>
-  <div class="background-blur"></div>
-  <h1>Dimas Adi Nugroho</h1>
-  <p>Manusia Observasi</p>
+  <!-- Navigasi dengan tombol + -->
+  <header>
+    <button id="menuToggle" aria-label="Buka menu navigasi">
+      <span class="bar bar1"></span>
+      <span class="bar bar2"></span>
+    </button>
+    <div class="logo">
+      <a href="https://dimasadingrh.me" class="logo-link">
+        <img src="images/logo.svg" alt="Logo Dimas" />
+      </a>
+    </div>
+  </header>
 
-  <div class="button-group">
-    <!-- LinkedIn Button -->
-    <a href="https://www.linkedin.com/in/dimasadingrh" target="_blank" class="button linkedin-btn">
-      LinkedIn
-    </a>
+  <!-- Overlay Menu -->
+  <nav id="overlayMenu">
+    <ul>
+      <li><a href="#projects">Proyek</a></li>
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="kontak.html">Kontak</a></li>
+    </ul>
+  </nav>
 
-    <!-- Portfolio Button -->
-    <a href="https://dimasadingrh.wixsite.com/portfolio" target="_blank" class="button portfolio-btn">
-      Portofolio
-    </a>
+  <!-- Daftar Proyek -->
+  <main id="projects">
+    <section class="project">
+      <img src="images/test.jpg" alt="Proyek 1">
+      <h2>Proyek 1</h2>
+    </section>
+    <section class="project">
+      <img src="images/test.jpg" alt="Proyek 2">
+      <h2>Proyek 2</h2>
+    </section>
+    <section class="project">
+      <img src="images/test.jpg" alt="Proyek 3">
+      <h2>Proyek 3</h2>
+    </section>
+  </main>
 
-    <a href="https://www.instagram.com/dimsadingrh" target="_blank" class="button instagram-btn">
-      Instagram
-    </a>
-
-    <a href="https://x.com/dimsadingrh/" target="_blank" class="button twitter-btn">
-      Twitter
-    </a>
-  </div>
+  <script src="script.js"></script>
 </body>
 </html>
