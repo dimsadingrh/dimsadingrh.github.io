@@ -314,28 +314,44 @@ body.kontak-bg {
   background-color: #181a20; /* fallback jika gambar gagal dimuat */
 }
 
+.keterangan-gambar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  text-align: center;
+  margin: 0;
+  padding-bottom: 18px;
+  color: #e0e0e0;
+  letter-spacing: 0.5px;
+  z-index: 10;
+  background: none;
+  pointer-events: none; /* agar tidak mengganggu klik elemen lain */
+}
+
+.lokasi-gambar {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.credit-gambar {
+  font-size: 0.9em;
+  color: #b0b3c6;
+  margin-top: 2px;
+}
+
 /* Vignette hanya di atas kanan & kiri untuk halaman kontak */
 body.kontak-bg::before {
   content: "";
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 120px; /* hanya bagian atas */
   pointer-events: none;
   z-index: 1;
   background:
-    linear-gradient(
-      to right,
-      rgba(0,0,0,0.35) 0%,     /* kiri atas */
-      rgba(0,0,0,0.00) 20%,
-      rgba(0,0,0,0.00) 80%,
-      rgba(0,0,0,0.35) 100%    /* kanan atas */
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(0,0,0,0.25) 0%,     /* atas */
-      rgba(0,0,0,0.00) 40%     /* bawah */
-    );
+    radial-gradient(circle at 0 0, rgba(0, 0, 0, 0.27) 0px, rgba(0,0,0,0.00) 130px),
+    radial-gradient(circle at 100vw 0, rgba(0,0,0,0.27) 0px, rgba(0,0,0,0.00) 130px);
 }
 
 .kontak-flex {
