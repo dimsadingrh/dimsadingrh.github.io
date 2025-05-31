@@ -1,51 +1,81 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dimas | Portofolio</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="images/logo.svg" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dimas Adi Nugroho - Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
-  <!-- Navigasi dengan tombol + -->
-  <header>
-    <button id="menuToggle" aria-label="Buka menu navigasi">
-      <span class="bar bar1"></span>
-      <span class="bar bar2"></span>
-    </button>
-    <div class="logo">
-      <a href="https://dimasadingrh.me" class="logo-link">
-        <img src="images/logo.svg" alt="Logo Dimas" />
-      </a>
+  <div id="splash">
+    <div class="splash-bg"></div>
+    <img src="assets/image/logo.svg" alt="Logo" id="splash-logo" />
+  </div>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <img src="assets/image/logo.svg" alt="Logo" />
+      </div>
+      <div class="name">
+        <span class="name-desktop">dimas adi nugroho</span>
+        <span class="name-mobile">d.a.n</span>
+      </div>
     </div>
-  </header>
 
-  <!-- Overlay Menu -->
-  <nav id="overlayMenu">
-    <ul>
-      <li><a href="#projects">Project</a></li>
-      <li><a href="#about">Feed</a></li>
-      <li><a href="/kontak/">Contact</a></li>
+    <div class="card hello-there">
+      <h2>Hello There</h2>
+      <p></p>
+    <p>
+      I'm Dimas Adi Nugroho.<br>
+      Welcome to my simple portfolio.<br>
+      Please scroll to see my activities, projects, and contact information!
+    </p>
+    <ul class="hello-list">
+      <li>🌱 I like to learn new things to explore!</li>
+      <li>💻 Focused on Design and UI/UX world</li>
+      <li>🎨 I also love to editing videos</li>
     </ul>
-  </nav>
+      <div class="hello-lottie">
+        <dotlottie-player
+          src="https://lottie.host/68d4efdd-b0a0-4ace-9892-8477056f6d0d/IwAFyKgQPX.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 500px; height: 500px"
+          loop
+          autoplay>
+        </dotlottie-player>
+      </div>
+</div>
 
-  <!-- Daftar Proyek -->
-  <main id="projects">
-    <section class="project">
-      <img src="images/test.jpg" alt="Proyek 1">
-      <h2>Proyek 1</h2>
-    </section>
-    <section class="project">
-      <img src="images/test.jpg" alt="Proyek 2">
-      <h2>Proyek 2</h2>
-    </section>
-    <section class="project">
-      <img src="images/test.jpg" alt="Proyek 3">
-      <h2>Proyek 3</h2>
-    </section>
-  </main>
+    <div class="card profile-photo">
+      <img src="assets/image/profile.png" alt="Profile Photo" class="profile-img" />
+    </div>
 
-  <script src="script.js"></script>
+    <div class="card activity">
+      <h3>College / Activity</h3>
+      <div class="scrollable">
+        <div class="photo">Photo 1</div>
+        <div class="photo">Photo 2</div>
+        <div class="photo">Photo 3</div>
+      </div>
+    </div>
+
+    <div class="card project">
+      <h3>Project</h3>
+      <p>Some project thumbnails or names.</p>
+    </div>
+
+    <div class="card social">
+      <h3>Social Media</h3>
+      <p>Instagram, LinkedIn, etc.</p>
+    </div>
+
+    <div class="card contact">
+      <h3>My Contact</h3>
+      <p>Email, Phone, etc.</p>
+    </div>
+  </div>
+  <script src="splash.js"></script>
 </body>
 </html>
