@@ -6,6 +6,7 @@
   <title>Dimas Adi Nugroho - Portfolio</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+  <link rel="icon" type="image/svg+xml" href="assets/image/logo.svg" />
 </head>
 <body>
   <div id="splash">
@@ -23,7 +24,7 @@
       </div>
     </div>
 
-    <div class="card hello-there">
+    <div class="hello-there">
       <h2>Hello There</h2>
       <p></p>
     <p>
@@ -48,34 +49,66 @@
       </div>
 </div>
 
-    <div class="card profile-photo">
+    <div class="profile-photo">
       <img src="assets/image/profile.png" alt="Profile Photo" class="profile-img" />
     </div>
 
-    <div class="card activity">
-      <h3>College / Activity</h3>
-      <div class="scrollable">
-        <div class="photo">Photo 1</div>
-        <div class="photo">Photo 2</div>
-        <div class="photo">Photo 3</div>
+    <div class="activity">
+      <div class="activity-scroll">
+        <div class="activity-accordion">
+          <div class="activity-item">
+            <button class="activity-title">
+              University Graduation
+              <span class="activity-icon"></span>
+            </button>
+            <div class="activity-content">
+              <div class="activity-carousel">
+                <img src="assets/image/activity/activity1.png" alt="Activity 1" />
+                <img src="assets/image/activity/activity2.png" alt="Activity 2" />
+              </div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <button class="activity-title">
+              Work
+              <span class="activity-icon"></span>
+            </button>
+            <div class="activity-content">
+              <div class="activity-carousel">
+                <img src="assets/image/activity3.jpg" alt="Activity 3" />
+                <img src="assets/image/activity4.jpg" alt="Activity 4" />
+              </div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <button class="activity-title">
+              Other Activities
+              <span class="activity-icon"></span>
+            </button>
+            <div class="activity-content">
+              <div class="activity-carousel">
+                <img src="assets/image/activity5.jpg" alt="Activity 5" />
+              </div>
+            </div>
+          </div>
+          <!-- Tambah item lain sesuai kebutuhan -->
+        </div>
       </div>
     </div>
 
-    <div class="card project">
-      <h3>Project</h3>
-      <p>Some project thumbnails or names.</p>
+    <div class="project">
+      <h2>Project</h2>
     </div>
 
-    <div class="card social">
-      <h3>Social Media</h3>
-      <p>Instagram, LinkedIn, etc.</p>
+    <div class="social">
+      <h2>Social Media</h2>
     </div>
 
-    <div class="card contact">
-      <h3>My Contact</h3>
-      <p>Email, Phone, etc.</p>
+    <div class="contact">
+      <h2>My Contact</h2>
     </div>
   </div>
   <script src="splash.js"></script>
+  <script src="card-activity.js"></script>
 </body>
 </html>
