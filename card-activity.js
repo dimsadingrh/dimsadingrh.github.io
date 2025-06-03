@@ -6,14 +6,6 @@ document.querySelectorAll('.activity-title').forEach(btn => {
     if (openItem && openItem !== item) openItem.classList.remove('open');
     item.classList.toggle('open');
 
-    // Cek apakah ada item yang open
-    const anyOpen = document.querySelector('.activity-item.open');
-    if (anyOpen) {
-      activityCard.classList.add('expanded');
-    } else {
-      activityCard.classList.remove('expanded');
-    }
-
     // Optional: scroll into view jika dibuka
     if (item.classList.contains('open')) {
       setTimeout(() => item.scrollIntoView({behavior: 'smooth', block: 'nearest'}), 300);
@@ -68,4 +60,11 @@ document.querySelectorAll('.activity-carousel').forEach(carousel => {
     const walk = (x - startX) * 1.5;
     carousel.scrollLeft = scrollLeft - walk;
   });
+});
+
+document.querySelector('.project').addEventListener('click', function() {
+  const target = document.getElementById('project-full');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
 });
