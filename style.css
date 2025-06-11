@@ -1,0 +1,779 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'PlayWriteHU';
+  src: url('assets/fonts/PlaywriteHU.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Splash Screen */
+#splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  transition: opacity 0.4s;
+}
+
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(80,73,61,0.5);
+  backdrop-filter: blur(70px);
+  transition: backdrop-filter 0.6s, opacity 0.6s;
+  z-index: 1;
+}
+
+#splash-logo {
+  width: 160px;
+  height: 160px;
+  z-index: 2;
+  animation: splash-bounce 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+@keyframes splash-bounce {
+  0%   { transform: scale(0.7); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+#splash.splash-hide {
+  animation: splash-slide-up 0.6s forwards;
+  pointer-events: none;
+}
+
+@keyframes splash-slide-up {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+#splash.splash-hide .splash-bg {
+  backdrop-filter: blur(6px);
+}
+
+/* Animasi scale up untuk card dan header */
+@keyframes scale-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.header, .hello-there, .profile-photo, .activity, .project, .social, .contact {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: none;
+}
+
+.hello-there.animated,
+.profile-photo.animated,
+.activity.animated,
+.project.animated,
+.social.animated,
+.contact.animated,
+.header.animated {
+  animation: scale-up 0.6s cubic-bezier(.68,-0.55,.27,1.55) forwards;
+}
+
+.header .logo img {
+  width: 40px !important;
+  height: 40px !important;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  display: block;
+  animation: header-bounce 0.6s cubic-bezier(.68,-0.55,.27,1.55) infinite;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-timing-function: cubic-bezier(.68,-0.55,.27,1.55);
+  animation-fill-mode: both;
+  animation-play-state: running;
+  /* interval 4 detik: 0.6s animasi, 3.4s diam */
+  animation-duration: 4s;
+}
+
+@keyframes header-bounce {
+  0%   { transform: scale(1); }
+  3%   { transform: scale(1.15); }
+  6%   { transform: scale(0.95); }
+  9%   { transform: scale(1.05); }
+  12%  { transform: scale(0.98); }
+  15%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+body {
+  background-color: #50493D;
+  font-family: sans-serif;
+  color: #D9D9D9;
+  min-height: 100vh;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 0.3fr 0.8fr 0.5fr 0.5fr;
+  grid-template-rows: 80px 1.5fr 1fr;
+  gap: 24px;
+  padding: 32px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Header */
+.header {
+  grid-column: 1 / 5;
+  grid-row: 1 / 2;
+  background-color: #618279;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+}
+
+.name {
+  font-family: 'PlayWriteHU', sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.name-mobile {
+  display: none;
+}
+
+/* Card: Hello There */
+.hello-there {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+  background-color: #EEC667;
+  border-radius: 20px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.hello-there h2 {
+  font-family: 'PlayWriteHU', sans-serif;
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-size: 2rem;
+  color: #618279;
+}
+
+.hello-there p {
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  color: #618279;
+}
+
+.hello-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hello-list li {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: #618279;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hello-lottie {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 2;
+  pointer-events: none; /* agar tidak mengganggu klik isi card */
+}
+
+.hello-lottie dotlottie-player {
+  width: 150px !important;
+  height: 150px !important;
+  /* Ubah ukuran sesuai kebutuhan */
+}
+
+/* Responsive: mobile & tablet, jadi statis di atas */
+@media (max-width: 1024px) {
+  .hello-lottie {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+    width: 100%;
+    pointer-events: none;
+  }
+  .hello-lottie dotlottie-player {
+    width: 100px !important;
+    height: 100px !important;
+    max-width: 40vw;
+    max-height: 30vw;
+  }
+}
+
+/* Card: Profile Photo */
+.profile-photo {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  background-color: #618279;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #618279;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0; 
+}
+
+.profile-photo .profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* gambar akan memenuhi card tanpa merusak aspect ratio */
+  display: block;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .profile-photo {
+    padding: 0;
+    min-height: 200px;
+    height: 100vw;
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .profile-photo .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.1); /* sedikit zoom agar tidak ada gap */
+  }
+}
+
+/* TABLET */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .profile-photo {
+    padding: 0;
+    min-height: 220px;
+    height: 100%;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    background: #618279;
+  }
+  .profile-photo .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.2); /* sedikit zoom agar tidak ada gap */
+  }
+}
+
+/* Card Activity Accordion - CLEAN VERSION */
+.activity {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #EEC667;
+  border-radius: 20px;
+  padding: 0;
+  grid-column: 4 / 5;
+  grid-row: 2 / 3;
+}
+
+.activity-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
+}
+
+.activity-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.activity-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+}
+
+.activity-title {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: 'PlayWriteHU', serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #618279;
+  padding: 20px 24px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.activity-icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-left: 12px;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+/* Plus icon (default) */
+.activity-icon::before,
+.activity-icon::after {
+  content: '';
+  position: absolute;
+  background: #618279;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.activity-icon::before {
+  top: 10px;
+  left: 4px;
+  width: 14px;
+  height: 3px;
+}
+
+.activity-icon::after {
+  left: 10px;
+  top: 4px;
+  width: 3px;
+  height: 14px;
+}
+
+.activity-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(.68,-0.55,.27,1.55), padding 0.3s;
+  background: none;
+  padding: 0;
+}
+
+/* Minus icon (jika parent .open) */
+.activity-item.open .activity-icon::after {
+  height: 0;
+}
+
+.activity-item.open .activity-content {
+  max-height: 340px; /* Atur sesuai kebutuhan, cukup untuk gambar 4:3 */
+  padding: 0 0 24px 0;
+}
+
+.activity-carousel {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-left: 24px;   /* samakan dengan padding kiri title */
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.activity-carousel.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.activity-carousel::-webkit-scrollbar { display: none; }
+
+.activity-carousel img {
+  aspect-ratio: 4 / 3;           /* Rasio 4:3 */
+  width: 100%;                   /* Isi penuh parent */
+  max-width: 420px;
+  height: auto;
+  object-fit: cover;              /* Gambar tetap proporsional */
+  border-radius: 20px;            /* Rounded besar */
+  background: #222;
+  flex-shrink: 0;
+  margin: 0;
+  display: block;
+}
+
+/* Responsive: Card activity full height in mobile/tablet */
+@media (max-width: 1024px) {
+  .activity {
+    min-height: 220px;
+    border-radius: 14px;
+    padding: 0;
+  }
+
+  .activity-item.open .activity-content {
+    max-height: 80vw; /* Gunakan satuan vw agar proporsional dengan lebar layar */
+    padding: 0 0 16px 0;
+  }
+
+  .activity-carousel {
+    gap: 8px;
+    padding: 0;
+  }
+
+  .activity-carousel img {
+    aspect-ratio: 4 / 3;
+    width: 100vw;         /* Full lebar layar */
+    max-width: 320px;      /* Hindari overflow */
+    height: auto;
+    max-height: calc(80vw * 0.75);
+    border-radius: 14px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin: 0;
+    display: block;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .activity-carousel img {
+    aspect-ratio: 4 / 3;
+    width: 60vw;           /* Lebar gambar jadi 60% viewport */
+    max-width: 420px;      /* Batasi lebar maksimum */
+    height: auto;
+    max-height: 315px;     /* 4:3 dari 420px */
+    border-radius: 16px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin: 0 auto;
+    display: block;
+  }
+  .activity-item.open .activity-content {
+    max-height: 340px;     /* Sesuaikan agar cukup untuk gambar */
+  }
+}
+
+/* Card: Project */
+.project {
+  grid-column: 1 / 3;         /* Lebarkan ke kiri, isi gap social */
+  grid-row: 3 / 4;
+  background-color: #EEC667;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.project-text{
+  font-style: italic;
+  font-family: inherit;
+  font-size: 2rem;
+  color: #618279;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  display: block;
+}
+
+/* Card: Social Media */
+.social {
+  grid-column: 3 / 4;
+  grid-row: 3 / 4;
+  background-color: #EEC667;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  max-width: 420px;            /* Kecilkan lebar */
+  width: 100%;
+  margin-left: auto;           /* Geser ke kanan dalam grid kolom */
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+.social-list {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0 0;
+  align-items: center;
+  justify-content: center;
+}
+.social-list a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.social-list a:hover {
+  transform: scale(1.15);
+}
+.social-list svg {
+  width: 50px;
+  height: 50px;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .social {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 14px;
+    padding-left: 8px;
+    padding-right: 8px;
+    box-sizing: border-box;
+    justify-content: center;
+  }
+}
+
+/* Card: Contact */
+/* Card Contact Custom */
+.contact {
+  grid-column: 4 / 5;
+  position: relative;
+  background: #618279;
+  border-radius: 20px;
+  padding: 32px 32px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 220px;
+  max-width: 420px; /* Lebar diperkecil */
+  width: 100%;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.contact-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.contact-question {
+  font-size: 1rem;
+  color: #EEC667;
+  opacity: 0.85;
+  font-family: sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.contact-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.contact-me {
+  font-family: 'PlayWriteHU', serif;
+  font-size: 2.6rem;
+  color: #EEC667;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  margin-top: 40px;
+  margin-bottom: 0;
+  margin-left: 0;
+  display: block;
+}
+.contact-me em {
+  font-style: italic;
+  font-family: inherit;
+  color: #EEC667;
+}
+/* Rainbow gradient text hanya untuk kata "me" */
+.contact-me em {
+  background: linear-gradient(45deg, #ff5e62, #ff9966, #f9d423, #a8e063, #38ef7d, #43cea2, #185a9d, #5b86e5, #ff5e62, #ff9966, #ff5e62);
+  background-size: 500% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-move 2s linear infinite;
+  font-style: italic;
+  font-family: inherit;
+}
+
+@keyframes rainbow-move {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* HANYA untuk desktop */
+@media (min-width: 1025px) {
+  .contact {
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .contact {
+    max-width: 100%;   /* atau hapus max-width agar ikut grid */
+    margin-left: 0;
+    margin-right: 0;
+    padding: 24px 16px 18px 16px;
+  }
+}
+
+/* full project */
+.project-full {
+  grid-column: 1 / 5;
+  grid-row: 5 / 6;
+  width: 100%;
+  min-height: 100vh;
+  background: #EEC667;
+  border-radius: 20px;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 48px 24px;
+}
+
+@media (max-width: 1024px) {
+  .project-full {
+    grid-column: 1 / 3;
+    grid-row: auto;
+    min-height: 80vh;
+    border-radius: 14px;
+    margin-top: 20px;
+    padding: 32px 8px;
+  }
+}
+@media (max-width: 768px) {
+  .project-full {
+    min-height: 60vh;
+    border-radius: 12px;
+    margin-top: 16px;
+    padding: 24px 4px;
+  }
+}
+
+/* responsif for mobile */
+@media (max-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px;
+    height: auto;
+  }
+  .header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    min-height: 60px;
+    padding: 12px;
+  }
+  .logo {
+    margin-right: 8px;
+  }
+  .logo img {
+    height: 32px;
+    width: 32px;
+  }
+  .name {
+    margin-left: auto;
+    font-size: 1.2rem;
+    font-family: 'PlayWriteHU', sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  .name-desktop {
+    display: none;
+  }
+  .name-mobile {
+    display: inline;
+  }
+}
+
+/* Tablet: 2 kolom */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto;
+    gap: 20px;
+    padding: 24px;
+    height: auto;
+  }
+  .header {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+  }
+  .hello-there {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  .profile-photo {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+  .activity {
+    grid-column: 1 / 3;   /* Full width, baris sendiri */
+    grid-row: 3 / 4;
+  }
+  .project {
+    grid-column: 1 / 3;   /* Full width, baris sendiri di bawah activity */
+    grid-row: 4 / 5;
+  }
+  .social {
+    grid-column: 1 / 2;
+    grid-row: 5 / 6;
+  }
+  .contact {
+    grid-column: 2 / 3;
+    grid-row: 5 / 6;
+  }
+}
