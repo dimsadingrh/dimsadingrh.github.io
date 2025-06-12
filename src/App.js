@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import ResumePage from './ResumePage';
 
 const name = "Dimas Adi Nugroho";
 
-function Header({ darkMode, setDarkMode }) {
+function Header({ darkMode, setDarkMode, onNav, activePage }) {
   const [bounceIndexes, setBounceIndexes] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -57,8 +58,20 @@ function Header({ darkMode, setDarkMode }) {
         </div>
         {/* Desktop menu */}
         <nav className="header-menu desktop-menu">
-          <a href="#contact" className="menu-link">Contact</a>
-          <a href="#resume" className="menu-link">Resume</a>
+          <a
+            href="#contact"
+            className={`menu-link${activePage === 'contact' ? ' active' : ''}`}
+            onClick={() => onNav('contact')}
+          >
+            Contact
+          </a>
+          <a
+            href="#resume"
+            className={`menu-link${activePage === 'resume' ? ' active' : ''}`}
+            onClick={() => onNav('resume')}
+          >
+            Resume
+          </a>
           <button
             className={`mode-switch-toggle${darkMode ? ' dark' : ''}`}
             onClick={() => setDarkMode(!darkMode)}
@@ -161,17 +174,58 @@ function Header({ darkMode, setDarkMode }) {
 }
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  // Ambil dari localStorage, default: false
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem('darkMode');
+    return stored === 'true';
+  });
 
+  // Simpan ke localStorage setiap kali darkMode berubah
   useEffect(() => {
+    localStorage.setItem('darkMode', darkMode);
     document.body.className = darkMode ? 'dark' : '';
-    document.body.style.background = darkMode ? '#2C2B28' : '#d9d9d9';
   }, [darkMode]);
+
+  const [page, setPage] = useState(() => {
+    // Baca hash saat pertama kali load
+    const hash = window.location.hash.replace('#', '');
+    return hash || 'home';
+  });
+
+  // Sinkronkan page dengan perubahan hash (misal user ketik manual atau refresh)
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      setPage(hash || 'home');
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  // Saat klik menu, update hash juga
+  const handleNav = (target) => {
+    window.location.hash = target;
+    setPage(target);
+  };
 
   return (
     <div className={`App ${darkMode ? 'dark' : 'light'}`}>
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-      <main className="main-content"></main>
+      <Header
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        onNav={handleNav}
+        activePage={page}
+      />
+      <main className="main-content">
+        {page === 'resume' ? (
+          <ResumePage
+            onBack={() => handleNav('home')}
+            darkMode={darkMode}
+            animated={!!window.history.state} // animasi hanya saat navigasi, bukan refresh
+          />
+        ) : null}
+        {/* Tambahkan halaman lain sesuai kebutuhan */}
+      </main>
     </div>
   );
 }
