@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ResumePage from './ResumePage';
+import SmoothCursor from './SmoothCursor';
 
 const name = "Dimas Adi Nugroho";
 
@@ -208,8 +209,25 @@ function App() {
     setPage(target);
   };
 
+  // State untuk cursor
+  const [hideCursor, setHideCursor] = useState(false);
+
+  useEffect(() => {
+    // Saat state berubah, update style
+    if (hideCursor) {
+      document.body.style.cursor = 'none';
+    } else {
+      document.body.style.cursor = '';
+    }
+  }, [hideCursor]);
+
   return (
-    <div className={`App ${darkMode ? 'dark' : 'light'}`}>
+    <div
+      className={`App ${darkMode ? 'dark' : 'light'}`}
+      onMouseEnter={() => setHideCursor(true)}
+      onMouseLeave={() => setHideCursor(false)}
+    >
+      <SmoothCursor />
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}

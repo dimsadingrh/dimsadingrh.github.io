@@ -29,7 +29,7 @@ function ResumePage({ onBack, darkMode }) {
           {/* Projects */}
           <section className="projects-section">
             <div className="project-col">
-              <h2>Personal.</h2>
+              <h2>Personal Projects.</h2>
               <div className="project-list">
                 <div>
                   <strong>ui.dimasadingrh.me</strong>
@@ -46,11 +46,11 @@ function ResumePage({ onBack, darkMode }) {
               </div>
             </div>
             <div className="project-col">
-              <h2>Client.</h2>
+              <h2>Work Projects</h2>
               <div className="project-list">
                 <div>
-                  <strong>Sports Edges</strong>
-                  <div className="project-desc">Built a sports betting platform with React.js.</div>
+                  <strong>UI/UX dashboard kemendikbud</strong>
+                  <div className="project-desc">Built a dashboard for the Indonesian Ministry of Education and Culture .</div>
                 </div>
                 <div>
                   <strong>Luxury For You</strong>

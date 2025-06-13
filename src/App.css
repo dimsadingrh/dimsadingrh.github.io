@@ -1,3 +1,24 @@
+/* Smooth Cursor Follower */
+#cursor .primary,
+#cursor .secondary {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FF183F;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+}
+#cursor .primary {
+  width: 8px;
+  height: 8px;
+}
+#cursor .secondary {
+  width: 64px;
+  height: 64px;
+  opacity: 0.2;
+}
+
 .header-blur {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -61,7 +82,7 @@ body.dark .logo-type {
   transition: color 0.2s;
 }
 .menu-link:hover {
-  color: #50493d;
+  color: #FFD600;
 }
 body.dark .menu-link {
   color: #fff;
@@ -70,7 +91,7 @@ body.dark .menu-link:hover {
   color: #FFD600;
 }
 .menu-link.active {
-  color: #0070f3;
+  color: #FFD600;
 }
 .menu-link.active::after {
   content: "";
@@ -80,7 +101,7 @@ body.dark .menu-link:hover {
   width: 80%;
   height: 2.5px;
   border-radius: 2px;
-  background: #0070f3;
+  background: #FFD600;
   transition: width 0.2s;
 }
 
@@ -381,8 +402,8 @@ body.dark .project-desc {
 /* Floating Back Button - new style */
 .floating-back-btn {
   position: fixed;
-  top: 15px; /* di bawah header (72px + margin) */
-  left: 25px; /* sama dengan .header-inner */
+  top: 1px; /* di bawah header (72px + margin) */
+  left: 15px; /* sama dengan .header-inner */
   z-index: 120;
   border: none;
   background: none;
@@ -405,4 +426,11 @@ body.dark .project-desc {
   min-width: 44px;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
   transition: background 0.2s;
+}
+
+/* App harus menutupi seluruh viewport */
+.App {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
 }
