@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import ResumePage from './ResumePage';
 import SmoothCursor from './SmoothCursor';
+import PDFViewer from './PDFViewer';
+import JourneyPage from './JourneyPage';
+import BackButton from './BackButton';
+import HomePage from './HomePage';
+import CustomScrollbar from './CustomScrollbar';
 
 const name = "Dimas Adi Nugroho";
 
@@ -18,11 +24,10 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
             setBounceIndexes((prev) => [...prev, i]);
             setTimeout(() => {
               setBounceIndexes((prev) => prev.filter(idx => idx !== i));
-            }, 350); // durasi animasi bounce
-          }, i * 60) // delay antar huruf
+            }, 350);
+          }, i * 60)
         );
       }
-      // Ulangi setiap 4 detik
       timeouts.push(
         setTimeout(() => {
           setBounceIndexes([]);
@@ -34,7 +39,6 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
     return () => timeouts.forEach(t => clearTimeout(t));
   }, []);
 
-  // Tutup menu saat resize ke desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 900 && menuOpen) setMenuOpen(false);
@@ -43,7 +47,6 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
     return () => window.removeEventListener('resize', handleResize);
   }, [menuOpen]);
 
-  // Switch button morph & geser
   return (
     <header className="header-blur">
       <div className="header-inner">
@@ -60,16 +63,16 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
         {/* Desktop menu */}
         <nav className="header-menu desktop-menu">
           <a
-            href="#contact"
-            className={`menu-link${activePage === 'contact' ? ' active' : ''}`}
-            onClick={() => onNav('contact')}
+            href="/journey"
+            className={`menu-link${activePage === 'journey' ? ' active' : ''}`}
+            onClick={e => { e.preventDefault(); onNav('/journey'); }}
           >
-            Contact
+            Journey
           </a>
           <a
-            href="#resume"
+            href="/resume"
             className={`menu-link${activePage === 'resume' ? ' active' : ''}`}
-            onClick={() => onNav('resume')}
+            onClick={e => { e.preventDefault(); onNav('/resume'); }}
           >
             Resume
           </a>
@@ -81,7 +84,6 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
             <span className="toggle-track">
               <span className="toggle-thumb">
                 {darkMode ? (
-                  // Bulan (tidak terpotong)
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                     <path
                       d="M16.5 11.5C16.5 15.09 13.59 18 10 18C9.13 18 8.3 17.87 7.53 17.64C10.03 17.09 12 14.86 12 12.21C12 9.56 10.03 7.33 7.53 6.78C8.3 6.55 9.13 6.42 10 6.42C13.59 6.42 16.5 9.33 16.5 11.5Z"
@@ -89,7 +91,6 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
                     />
                   </svg>
                 ) : (
-                  // Matahari tetap
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                     <circle cx="11" cy="11" r="5" fill="#FFD600"/>
                     <g stroke="#FFD600" strokeWidth="2" strokeLinecap="round">
@@ -132,8 +133,20 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
         </button>
         {/* Mobile menu */}
         <div className={`mobile-menu mobile-only${menuOpen ? ' open' : ''}${darkMode ? ' dark' : ''}`}>
-          <a href="#contact" className="menu-link">Contact</a>
-          <a href="#resume" className="menu-link">Resume</a>
+          <a
+            href="/journey"
+            className="menu-link"
+            onClick={e => { e.preventDefault(); setMenuOpen(false); onNav('/journey'); }}
+          >
+            Journey
+          </a>
+          <a
+            href="/resume"
+            className="menu-link"
+            onClick={e => { e.preventDefault(); setMenuOpen(false); onNav('/resume'); }}
+          >
+            Resume
+          </a>
           <button
             className={`mode-switch-toggle${darkMode ? ' dark' : ''}`}
             onClick={() => setDarkMode(!darkMode)}
@@ -142,7 +155,6 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
             <span className="toggle-track">
               <span className="toggle-thumb">
                 {darkMode ? (
-                  // Bulan (tidak terpotong)
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                     <path
                       d="M16.5 11.5C16.5 15.09 13.59 18 10 18C9.13 18 8.3 17.87 7.53 17.64C10.03 17.09 12 14.86 12 12.21C12 9.56 10.03 7.33 7.53 6.78C8.3 6.55 9.13 6.42 10 6.42C13.59 6.42 16.5 9.33 16.5 11.5Z"
@@ -150,7 +162,6 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
                     />
                   </svg>
                 ) : (
-                  // Matahari tetap
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                     <circle cx="11" cy="11" r="5" fill="#FFD600"/>
                     <g stroke="#FFD600" strokeWidth="2" strokeLinecap="round">
@@ -174,46 +185,20 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
   );
 }
 
-function App() {
-  // Ambil dari localStorage, default: false
+function AppContent() {
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('darkMode');
     return stored === 'true';
   });
 
-  // Simpan ke localStorage setiap kali darkMode berubah
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode);
     document.body.className = darkMode ? 'dark' : '';
   }, [darkMode]);
 
-  const [page, setPage] = useState(() => {
-    // Baca hash saat pertama kali load
-    const hash = window.location.hash.replace('#', '');
-    return hash || 'home';
-  });
-
-  // Sinkronkan page dengan perubahan hash (misal user ketik manual atau refresh)
-  useEffect(() => {
-    const onHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      setPage(hash || 'home');
-    };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, []);
-
-  // Saat klik menu, update hash juga
-  const handleNav = (target) => {
-    window.location.hash = target;
-    setPage(target);
-  };
-
-  // State untuk cursor
   const [hideCursor, setHideCursor] = useState(false);
 
   useEffect(() => {
-    // Saat state berubah, update style
     if (hideCursor) {
       document.body.style.cursor = 'none';
     } else {
@@ -221,31 +206,73 @@ function App() {
     }
   }, [hideCursor]);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Tentukan backTarget berdasarkan path
+  let backTarget = '/';
+  if (location.pathname === '/resume') backTarget = '/';
+  if (location.pathname === '/pdf') backTarget = '/resume';
+
+  // Untuk activePage pada Header
+  let activePage = 'home';
+  if (location.pathname === '/journey') activePage = 'journey';
+  if (location.pathname === '/resume') activePage = 'resume';
+  if (location.pathname === '/pdf') activePage = 'pdf';
+
   return (
     <div
       className={`App ${darkMode ? 'dark' : 'light'}`}
       onMouseEnter={() => setHideCursor(true)}
       onMouseLeave={() => setHideCursor(false)}
     >
+      <CustomScrollbar darkMode={darkMode} />
       <SmoothCursor />
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}
-        onNav={handleNav}
-        activePage={page}
+        onNav={path => navigate(path)}
+        activePage={activePage}
       />
+
+      {/* Floating Back Button di luar konten */}
+      {location.pathname !== '/' && (
+        <BackButton
+          onBack={() => navigate(backTarget)}
+          darkMode={darkMode}
+          animated={false}
+          label={location.pathname === '/pdf' ? 'Back To Resume Page' : 'Back to Main Page'}
+        />
+      )}
+
       <main className="main-content">
-        {page === 'resume' ? (
-          <ResumePage
-            onBack={() => handleNav('home')}
-            darkMode={darkMode}
-            animated={!!window.history.state} // animasi hanya saat navigasi, bukan refresh
+        <Routes>
+          <Route
+              path="/"
+              element={<HomePage darkMode={darkMode} />}
+            />
+          <Route
+            path="/journey"
+            element={<JourneyPage darkMode={darkMode} />}
           />
-        ) : null}
-        {/* Tambahkan halaman lain sesuai kebutuhan */}
+          <Route
+            path="/resume"
+            element={<ResumePage darkMode={darkMode} onShowPdf={() => navigate('/pdf')} />}
+          />
+          <Route
+            path="/pdf"
+            element={<PDFViewer file="/pdf/CV.pdf" darkMode={darkMode} />}
+          />
+        </Routes>
       </main>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
