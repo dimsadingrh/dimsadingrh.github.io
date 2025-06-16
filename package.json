@@ -9,7 +9,6 @@
     "@testing-library/user-event": "^13.5.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.17.3",
-    "gh-pages": "^6.3.0",
     "motion": "^12.18.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -25,7 +24,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "postbuild": "copy build\\index.html build\\404.html"
   },
   "eslintConfig": {
     "extends": [
@@ -45,5 +45,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://dimasadingrh.me"
+  "homepage": "https://dimasadingrh.me",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
 }
