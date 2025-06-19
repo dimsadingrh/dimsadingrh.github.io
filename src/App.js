@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import ResumePage from './ResumePage';
@@ -11,7 +11,7 @@ import CustomScrollbar from './CustomScrollbar';
 
 const name = "Dimas Adi Nugroho";
 
-function Header({ darkMode, setDarkMode, onNav, activePage }) {
+function Header({ darkMode, setDarkMode, toggleBtnRef, handleThemeSwitch, onNav, activePage }) {
   const [bounceIndexes, setBounceIndexes] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -77,8 +77,9 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
             Resume
           </a>
           <button
+            ref={!menuOpen ? toggleBtnRef : null}
             className={`mode-switch-toggle${darkMode ? ' dark' : ''}`}
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={handleThemeSwitch}
             aria-label="Switch mode"
           >
             <span className="toggle-track">
@@ -148,8 +149,9 @@ function Header({ darkMode, setDarkMode, onNav, activePage }) {
             Resume
           </a>
           <button
+            ref={menuOpen ? toggleBtnRef : null}
             className={`mode-switch-toggle${darkMode ? ' dark' : ''}`}
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={handleThemeSwitch}
             aria-label="Switch mode"
           >
             <span className="toggle-track">
@@ -190,11 +192,40 @@ function AppContent() {
     const stored = localStorage.getItem('darkMode');
     return stored === 'true';
   });
+  const [transitioning, setTransitioning] = useState(false);
+  const [circle, setCircle] = useState(null); // {cx, cy, color, toDark}
+  const toggleBtnRef = useRef();
 
   useEffect(() => {
-    localStorage.setItem('darkMode', darkMode);
     document.body.className = darkMode ? 'dark' : '';
+    localStorage.setItem('darkMode', darkMode);
   }, [darkMode]);
+
+  // Fungsi animasi circular transition
+  const handleThemeSwitch = () => {
+    if (!toggleBtnRef.current) {
+      setDarkMode(d => !d);
+      return;
+    }
+    const btn = toggleBtnRef.current;
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    setCircle({
+      cx,
+      cy,
+      color: darkMode ? '#fff' : '#232323', // warna overlay (gelap/terang)
+      toDark: !darkMode
+    });
+    setTransitioning(true);
+    setTimeout(() => {
+      setDarkMode(d => !d);
+    }, 350); // setengah durasi animasi
+    setTimeout(() => {
+      setTransitioning(false);
+      setCircle(null);
+    }, 700); // total durasi animasi
+  };
 
   const [hideCursor, setHideCursor] = useState(false);
 
@@ -231,6 +262,8 @@ function AppContent() {
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}
+        toggleBtnRef={toggleBtnRef}
+        handleThemeSwitch={handleThemeSwitch}
         onNav={path => navigate(path)}
         activePage={activePage}
       />
@@ -265,6 +298,45 @@ function AppContent() {
           />
         </Routes>
       </main>
+
+      {/* Circular transition overlay */}
+      {transitioning && circle && (
+        <div
+          style={{
+            position: 'fixed',
+            left: 0, top: 0, width: '100vw', height: '100vh',
+            pointerEvents: 'none',
+            zIndex: 9999,
+            overflow: 'hidden'
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 0, top: 0, width: '100vw', height: '100vh',
+              background: circle.color,
+              opacity: 0.35, // Atur transparansi agar konten tetap terlihat
+              mixBlendMode: 'exclusion', // atau 'difference' sesuai selera
+              transition: 'clip-path 0.7s cubic-bezier(.7,0,.3,1), opacity 0.7s',
+              clipPath: `circle(0px at ${circle.cx}px ${circle.cy}px)`,
+              animation: 'circle-reveal 0.7s cubic-bezier(.7,0,.3,1) forwards'
+            }}
+          />
+          <style>
+            {`
+            @keyframes circle-reveal {
+              from {
+                clip-path: circle(0px at ${circle.cx}px ${circle.cy}px);
+              }
+              to {
+                clip-path: circle(150vw at ${circle.cx}px ${circle.cy}px);
+              }
+            }
+            `}
+          </style>
+        </div>
+      )}
+
     </div>
   );
 }
