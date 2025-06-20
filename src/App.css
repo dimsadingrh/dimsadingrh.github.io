@@ -6,6 +6,7 @@ html::-webkit-scrollbar {
 html,body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
+  scroll-behavior: smooth;
 }
 
 /* Smooth Cursor Follower */
@@ -34,19 +35,66 @@ body.dark #cursor .secondary {
   background-color: #fff;
 }
 
+/* Liquid Glass iOS 26 Inspired Header - Soft, Natural, Subtle Chromatic */
 .header-blur {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  backdrop-filter: blur(16px);
-  background: rgba(255,255,255,0.7);
-  transition: background 0.3s;
   min-height: 72px;
+  background: rgba(255,255,255,0.13);
+  backdrop-filter: blur(18px) saturate(160%) contrast(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(160%) contrast(1.08);
+  border-bottom: 1.5px solid rgba(255,255,255,0.18);
+  border-radius: 0 0 22px 22px;
+  transition: background 0.3s, border 0.3s, border-radius 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+  overflow: visible;
+  box-shadow: none;
+}
+.header-blur::before {
+  /* Subtle frosty edge highlight */
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 22px 22px;
+  border-bottom: 1.5px solid rgba(255,255,255,0.22);
+  opacity: 0.5;
+  z-index: 2;
+}
+.header-blur::after {
+  /* Subtle chromatic aberration & bending light effect */
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 22px 22px;
+  z-index: 3;
+  background:
+    linear-gradient(90deg, rgba(255,0,80,0.07) 0%, rgba(0,255,255,0.05) 100%),
+    linear-gradient(0deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.00) 60%);
+  mix-blend-mode: lighten;
+  opacity: 0.55;
+  filter: blur(0.3px);
+}
+.header-blur:active,
+.header-blur:focus-within {
+  border-radius: 0 0 32px 32px;
+  transition: border-radius 0.25s cubic-bezier(.68,-0.55,.27,1.55);
 }
 body.dark .header-blur {
-  background: rgba(44,43,40,0.7);
-  border-bottom: 1px solid #2C2B28;
+  background: rgba(44,43,40,0.15);
+  border-bottom: 1.5px solid rgba(255,255,255,0.08);
 }
+body.dark .header-blur::before {
+  border-bottom: 1.5px solid rgba(255,255,255,0.13);
+}
+body.dark .header-blur::after {
+  background:
+    linear-gradient(90deg, rgba(255,0,80,0.04) 0%, rgba(0,255,255,0.03) 100%),
+    linear-gradient(0deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 60%);
+  opacity: 0.38;
+}
+
 .header-inner {
   max-width: 1400px;
   margin: 0 auto;
@@ -488,6 +536,45 @@ body.dark .project-desc {
   .pdf-viewer-outer {
     padding-top: 140px !important;
   }
+}
+
+/* Responsive padding & layout for homepage sections */
+.homepage-section {
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-top: 120px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  .homepage-section {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 100px;
+  }
+}
+@media (max-width: 700px) {
+  .homepage-section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 80px !important;
+  }
+  .homepage-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 18px !important;
+    width: 100% !important;
+  }
+}
+
+/* Optional: make sure images and svg are responsive */
+.homepage-section img,
+.homepage-section svg {
+  max-width: 100%;
+  height: auto;
 }
 
 
